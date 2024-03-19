@@ -3,8 +3,16 @@ def prompt(message)
 end
 
 def valid_number?(num)
-  /^-?\d+$/.match(num)
+  valid_integer?(num) || valid_float?(num)
 end
+
+def valid_integer?(input)
+  /^-?\d+$/.match(input)
+end
+
+def valid_float?(input)
+  /\d+/.match?(input) && /^-?\d*\.?\d*$/.match?(input)
+end    
 
 def operation_to_message(op)
   case op
@@ -84,11 +92,11 @@ loop do # main loop
 
   result = case operator
            when '1'
-             number1.to_i() + number2.to_i()
+             number1.to_f() + number2.to_f()
            when '2'
-             number1.to_i() - number2.to_i()
+             number1.to_f() - number2.to_f()
            when '3'
-             number1.to_i() * number2.to_i()
+             number1.to_f() * number2.to_f()
            when '4'
              number1.to_f() / number2.to_f()
            end
