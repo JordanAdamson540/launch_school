@@ -1,0 +1,13 @@
+
+welcome: "Welcome to Calculator! Enter your name:"
+valid_name: "Make sure to enter a valid name."
+hello: "Hi"
+number1: "What's the first number?"
+incorrect_number: "Hmm... that doesn't look like a valid number"
+number2: "What's the second number?"
+one_to_four_choice: "Must choose 1, 2, 3, or 4"
+two_numbers: "the two numbers..."
+result: "The result is "
+another_one: "Do you want to perform another calculation? (Y to calculate again)"
+good_bye: "Thank you for using the calculator. Good bye!"
+# ... rest of file omitted for brevity
