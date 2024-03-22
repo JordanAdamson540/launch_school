@@ -1,13 +1,35 @@
 
-welcome: "Welcome to Calculator! Enter your name:"
-valid_name: "Make sure to enter a valid name."
-hello: "Hi"
-number1: "What's the first number?"
-incorrect_number: "Hmm... that doesn't look like a valid number"
-number2: "What's the second number?"
-one_to_four_choice: "Must choose 1, 2, 3, or 4"
-two_numbers: "the two numbers..."
-result: "The result is "
-another_one: "Do you want to perform another calculation? (Y to calculate again)"
-good_bye: "Thank you for using the calculator. Good bye!"
+en:
+  welcome: "Welcome to Calculator! Enter your name:"
+  valid_name: "Make sure to enter a valid name."
+  hello: "Hi"
+  number1: "What's the first number?"
+  incorrect_number: "Hmm... that doesn't look like a valid number"
+  number2: "What's the second number?"
+  one_to_four_choice: "Must choose 1, 2, 3, or 4"
+  two_numbers: "the two numbers..."
+  result: "The result is "
+  another_one: "Do you want to perform another calculation? (Y to calculate again)"
+  good_bye: "Thank you for using the calculator. Good bye!"
+  operator_prompt: |
+    What operation would you like to perform?
+       1) add
+       2) subtract
+       3) multiply
+       4) divide
+  
+es:
+  welcome: '¡Bienvenido a Calculadora! Introduzca su nombre'
+  valid_name: 'Asegúrese de ingresar un nombre válido.'
+  hello: 'Hola'
+  number1: '¿Cuál es el primer número?'
+  incorrect_number: 'Hmm... ese no parece un número válido'
+  number2: '¿Cuál es el segundo número?'
+  one_to_four_choice: 'Debes elegir 1, 2, 3 o 4'
+  two_numbers: 'los dos numeros...'
+  result: 'El resultado es '
+  another_one: '¿Quieres realizar otro cálculo? (Y para calcular nuevamente)'
+  good_bye: 'Gracias por usar la calculadora. ¡Adiós!'
+
+
 # ... rest of file omitted for brevity
