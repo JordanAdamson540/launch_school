@@ -1,0 +1,26 @@
+welcome: 'Welcome to mortgage calculator'
+to_borrow: 'How much would you like to borrow?'
+pos_req: 'You must put a positive number'
+ask_annual: |
+  What is your annual interest rate? 
+     (Example: 7% should be entered as .07)
+your_rate: |
+  Your monthly interest rate will be... %{one}%%
+     Note how your monthly rate has been rounded to the nearest basis point
+     ##.#### (the farthest right pound sign) to make the numeric value understandable.
+     Your actual interest rate (which is used in the final calculation) unrounded will be ...
+actual_rate: '%{one}'
+preditory: |
+  Note that you entered a higher than normal value, 
+     which means your APR is above 30%%. 
+     This is in line with credit cards and preditory lenders, which is abnormal.
+     You most likely meant to put...
+     %{one} or %{two}
+continue_apr: Do you want to continue with your APR being %{one}%%?
+duration_mon_yrs: Would you like to enter your loan duration in years or months (both options generate APR)?
+years?: How many years would you like your loan to be?
+months?: How many months would you like your loan to be?
+no_decimal: Since you choose %{one}, you must use a number that also is without a decimal
+payment: 'Your monthly payment is: %{one}'
+yrs_or_months: You must select years or months
+
