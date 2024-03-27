@@ -108,7 +108,7 @@ def interest_rate_check?(i_r_y) # interest_rate_years
     prompt_two_interpolation('preditory', i_r_y / 100, i_r_y / 10)
     prompt_interpolation("continue_apr", i_r_y * 100)
     response = gets.chomp.downcase
-    return true if response == 'yes' # nil if no yes
+    return true if response.start_with?('y') # nil if no yes
   else
     true
   end
@@ -119,7 +119,7 @@ def user_duration
   loop do
     prompt('duration_mon_yrs')
     duration = gets.chomp.downcase
-    break if duration == 'months'.downcase || duration == 'years'.downcase
+    break if duration == 'months' || duration == 'years'
     prompt('yrs_or_months')
   end
   case duration
@@ -169,11 +169,21 @@ def currency_formatting(monthly_payment)
   format("$%.2f", monthly_payment)
 end
 
-prompt('welcome')
+def another_calc?
+  prompt('another?')
+  response = gets.chomp.downcase
+  response.start_with?('y') ? true : false
+end
 
-loan_amount = user_loan_amount
-interest_rate_months = user_interest_rate
-duration_months = user_duration
-monthly_pmt = loan_formula(loan_amount, interest_rate_months, duration_months)
-monthly_pmt = currency_formatting(monthly_pmt)
-prompt_interpolation('payment', monthly_pmt)
+prompt('welcome')
+loop do
+  loan_amount = user_loan_amount
+  interest_rate_months = user_interest_rate
+  duration_months = user_duration
+  monthly_pmt = loan_formula(loan_amount, interest_rate_months, duration_months)
+  monthly_pmt = currency_formatting(monthly_pmt)
+  prompt_interpolation('payment', monthly_pmt)
+  break unless another_calc?
+end
+
+prompt('goodbye')

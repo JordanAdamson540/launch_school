@@ -23,4 +23,5 @@ months?: How many months would you like your loan to be?
 no_decimal: Since you choose %{one}, you must use a number that also is without a decimal
 payment: 'Your monthly payment is: %{one}'
 yrs_or_months: You must select years or months
-
+another?: Would you like to do another calculation?
+goodbye: 'Thank you for using the mortgage calculator. Have a good day'
