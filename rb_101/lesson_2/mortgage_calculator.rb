@@ -172,7 +172,7 @@ end
 def another_calc?
   prompt('another?')
   response = gets.chomp.downcase
-  response.start_with?('y') ? true : false
+  true if response.start_with?('y')
 end
 
 prompt('welcome')
