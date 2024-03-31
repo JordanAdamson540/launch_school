@@ -1,0 +1,54 @@
+# m = p * (j / (1 - (1 + j)**(-n)))
+=begin
+m = monthly payment
+p = loan amount
+j = monthly interest rate
+n = loan duration in months
+=end
+
+=begin
+You'll need three pieces of information:
+
+the loan amount
+the Annual Percentage Rate (APR)
+the loan duration
+From the above, you'll need to calculate the following things:
+
+monthly interest rate
+loan duration in months
+monthly payment
+=end
+
+=begin
+greet the user
+get the loan amount from the user
+  -the amount must be a positive float
+get the interest rate from the user
+  -the amount must be a positive float
+  -show what the interest rate will be each month
+
+get the loan duration from the user
+  -the amount must be a positive integer
+  -show how many months the user will have the loan
+calculate the monthly payment
+=end
+
+=begin
+BEGIN
+PRINT greet the user
+SET loan_amount = SUBPROCCESS GET loan amount from user (+ float)
+SET interest_rate_months = SUBPROCCESS GET interest rate from user (+ float)
+                             -convert to monthly interest rate
+SET duration_months = SUBPROCESS GET the years from user (+ integer)
+                        -convert to months
+SET monthly_payment = SUBPROCESS formula for loan
+PRINT monthly_payment
+END
+=end
+
+=begin
+  extra features
+  -=>
+  -text on yaml (do not put interpolation on yaml file)
+
+=end
