@@ -1,14 +1,13 @@
-welcome: 'Welcome to mortgage calculator'
+welcome: Welcome to mortgage calculator
 name: What is your name?
 valid_name: You must enter your name.
 user_greeting: |
   Hello %{one}. Hopefully, you will gain some utility out of
      this mortgage calculator.
 to_borrow: |
-  'How much would you like to borrow?'
+  How much would you like to borrow?
      (Example: $100,000 should be entered as 100000)
      (Example: $250,000 should be entered as 250000)
-
 pos_req: 'You must put a positive integer (no decimal and no useage of commas)'
 ask_annual: |
   What is your annual interest rate? 
@@ -23,6 +22,7 @@ zero_interest: |
   You entered an interest rate of 0%, which is a bit abnormal in a
      lender and lendee society. Are you sure your lender is letting
      you borrow money for free?
+     (type yes or no as a response)
 zero_dollars: |
   You entered an amount of $0 (or a crazy value not defined in dollars),
      which cannot be the case when you are borrowing money.
@@ -42,23 +42,22 @@ preditory: |
      This is in line with credit cards and preditory lenders, which is abnormal.
      You most likely meant to put...
      %{one} or %{two}
-continue_apr: DO YOU WANT TO CONTINUE WITH YOUR APR BEING %{one}%%!!!!!?
+continue_apr: |
+  DO YOU WANT TO CONTINUE WITH YOUR APR BEING %{one}%%!!!!!?
+     (type yes or no as a response)
 duration_mon_yrs: Would you like to enter your loan duration in years or months (both options generate APR)?
 years?: How many years would you like your loan to be?
 months?: How many months would you like your loan to be?
 no_decimal: Since you choose %{one}, you must use a number that also is without a decimal
 payment: 'Your monthly payment is: %{one}'
 yrs_or_months: You must select years or months
-another?: Would you like to do another calculation?
-goodbye: Thank you for using the mortgage calculator. Have a good day.
+another?: |
+  Would you like to do another calculation?
+     (type yes or no as a response)
+goodbye: Thank you for using the mortgage calculator %{one}. Have a good day.
 confirm_loan: |
   Are you sure you want...
      a loan of %{one},
      a yearly interest rate of %{two},
      and a duration of %{three} months?
-
-
-
-confirm_interest_rate:
-
-confirm_duration:
+     (type yes or no as a response)

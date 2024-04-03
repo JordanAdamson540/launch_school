@@ -47,7 +47,7 @@ def valid_name_checker?(name)
   # the above is to try and account for various names that can come up
 end
 
-def user_loan_amount
+def get_loan_from_user
   loan = ''
   loop do
     prompt('to_borrow')
@@ -57,35 +57,46 @@ def user_loan_amount
   loan.to_f
 end
 
-def user_interest_rate
-  i_r_y = '' # interest rate years
-  i_r_m = '' # intereset rate months
+def aquire_and_convert_user_interest_rate
+  user_interest_rate_years = ''
+  converted_user_rate_from_years_to_months = ''
   loop do
-    i_r_y = annual_rate.to_f
-    i_r_m = (i_r_y / MONTHS_IN_YEAR)
-    if i_r_y != UNREALISTIC_INTEREST && i_r_y < PREDATORY_INTEREST
-      prompt_interpolation('your_rate', i_r_m.round(4))
-      # '##.####' text you will see in output from yml file tries to explain
-      # how the user will read the rounding of their interest rate
-      prompt_interpolation('actual_rate', i_r_m)
-    end
-    break if interest_rate_check?(i_r_y)
+    user_interest_rate_years = ask_user_annual_rate.to_f
+    converted_user_rate_from_years_to_months =
+      (user_interest_rate_years / MONTHS_IN_YEAR)
+    output_rounded_and_unrounded_rates(user_interest_rate_years,
+                                       converted_user_rate_from_years_to_months)
+    break if interest_rate_check?(user_interest_rate_years)
   end
-  i_r_m
+  converted_user_rate_from_years_to_months
 end
 
-def annual_rate
-  i_r_y = '' # interest_rate_years
+def output_rounded_and_unrounded_rates(user_interest_rate_years,
+                                       converted_user_rate_from_years_to_months)
+  if user_interest_rate_years != UNREALISTIC_INTEREST &&
+     user_interest_rate_years < PREDATORY_INTEREST
+    prompt_interpolation('your_rate',
+                         converted_user_rate_from_years_to_months.round(4))
+    # '##.####' text you will see in output from yml file tries to explain
+    # how the user will read the rounding of their interest rate
+    prompt_interpolation('actual_rate',
+                         converted_user_rate_from_years_to_months)
+  end
+end
+
+def ask_user_annual_rate
+  user_interest_rate_years = ''
   loop do
     prompt('ask_annual')
-    i_r_y = gets.chomp
-    break if percent_check?(i_r_y) && positive_float?(i_r_y) # line_AA
+    user_interest_rate_years = gets.chomp
+    break if percent_check?(user_interest_rate_years) &&
+             positive_float?(user_interest_rate_years) # line_AA
   end
-  i_r_y
+  user_interest_rate_years
 end
 
-def percent_check?(i_r_y) # interest_rate_years
-  value = /\%/.match?(i_r_y)
+def percent_check?(interest_rate_years)
+  value = /\%/.match?(interest_rate_years)
   prompt('percentage') if value
   !value
   # flips to false with the ! sign which causes line_AA to short circuit
@@ -94,29 +105,36 @@ def percent_check?(i_r_y) # interest_rate_years
   # when they did, just with a percentage sign
 end
 
-def interest_rate_check?(i_r_y) # interest_rate_years
-  value = zero_check?(i_r_y)
-  if i_r_y >= PREDATORY_INTEREST
-    i_r_y.round(4) # done first: keep from exceeding 80 characters below
-    prompt_two_interpolation('preditory', i_r_y / 100, i_r_y / 10)
-    prompt_interpolation("continue_apr", i_r_y * 100)
+def interest_rate_check?(interest_rate_years) # interest_rate_years
+  value = zero_interest_check?(interest_rate_years)
+  if interest_rate_years >= PREDATORY_INTEREST
+    interest_rate_years.round(4)
+    prompt_two_interpolation('preditory',
+                             interest_rate_years / 100,
+                             interest_rate_years / 10)
+    prompt_interpolation("continue_apr", interest_rate_years * 100)
     # 100 and 10 come from user misentering percent to decimal conversions
     response = gets.chomp.downcase
     value = response.start_with?('y')
-  elsif i_r_y < PREDATORY_INTEREST && i_r_y > UNREALISTIC_INTEREST
+  elsif interest_rate_years <
+        PREDATORY_INTEREST && interest_rate_years > UNREALISTIC_INTEREST
     value = true
   end
-  clear_screen unless value
   value
 end
 
-def zero_check?(i_r_y)
-  if i_r_y.to_f.zero?
-    prompt('zero_interest')
-    confirm = gets.chomp
-    return true if confirm.start_with?('y') # nil if response is not yes
-  else
-    true
+def zero_interest_check?(interest_rate_years)
+  loop do
+    if interest_rate_years.to_f.zero?
+      prompt('zero_interest')
+      confirm = gets.chomp.downcase.chr
+      case confirm
+      when 'y' then break true
+      when 'n' then break false
+      end
+    else
+      break true
+    end
   end
 end
 
@@ -130,13 +148,13 @@ def user_duration
   end
 
   if duration.start_with?('y')
-    years
+    user_selects_years
   else
-    months
+    user_selects_months
   end
 end
 
-def years
+def user_selects_years
   years = ''
   loop do
     prompt('years?')
@@ -146,7 +164,7 @@ def years
   years.to_i * MONTHS_IN_YEAR
 end
 
-def months
+def user_selects_months
   months = ''
   loop do
     prompt('months?')
@@ -157,17 +175,25 @@ def months
 end
 
 def confirm_choices?(loan, interest_rate, duration)
+  response = ''
   loan = currency_formatting(loan)
   interest_rate = percentage_formatting(interest_rate)
-  prompt_three_interpolation('confirm_loan', loan, interest_rate, duration)
-  response = gets.chomp.downcase
-  response.start_with?('y')
+  loop do
+    prompt_three_interpolation('confirm_loan', loan, interest_rate, duration)
+    response = gets.chomp.downcase
+    break if response.start_with?('y', 'n')
+  end
+  response = response[0]
+  case response
+  when 'y' then true
+  when 'n' then false
+  end
 end
 
-def loan_formula(loan_amount, i_r_m, duration_months) # interest_rate_MONTHS
-  return loan_amount / dur_months if i_r_m == 0
-  final_value = (loan_amount * i_r_m) /
-                (1 - ((1 + i_r_m)**(-(duration_months))))
+def loan_formula(loan_amount, interest_rate_months, duration_months)
+  return loan_amount / duration_months if interest_rate_months == 0
+  final_value = (loan_amount * interest_rate_months) /
+                (1 - ((1 + interest_rate_months)**(-(duration_months))))
   final_value.round(2)
 end
 
@@ -209,6 +235,10 @@ def another_calculation?
   true if response.start_with?('y')
 end
 
+def say_goodbye(name)
+  prompt_interpolation('goodbye', name)
+end
+
 # start of calculator
 PREDATORY_INTEREST = 0.3
 UNREALISTIC_INTEREST = 0
@@ -226,8 +256,8 @@ monthly_payment = ''
 
 loop do
   loop do
-    loan_amount = user_loan_amount
-    interest_rate_months = user_interest_rate
+    loan_amount = get_loan_from_user
+    interest_rate_months = aquire_and_convert_user_interest_rate
     duration_months = user_duration
     monthly_payment = loan_formula(loan_amount,
                                    interest_rate_months,
@@ -243,4 +273,4 @@ loop do
   clear_screen
 end
 clear_screen
-prompt('goodbye')
+say_goodbye(user_name)
