@@ -22,31 +22,29 @@ def valid_integer?(input)
 end
 
 def valid_float?(input)
-  /\d+/.match?(input) && /^-?\d*\.?\d*$/.match?(input)
+  /\d/.match?(input) && /^-?\d*\.?\d*$/.match?(input)
 end    
 
 def operation_to_message(operation)
   word = case operation
          when '1'
-           '=> Adding'
+           format(MESSAGES[LANGUAGE]['add'])     
          when '2'
-           '=> Subtracting'
+           format(MESSAGES[LANGUAGE]['subtract'])
          when '3'
-           '=> Multiplying'
+           format(MESSAGES[LANGUAGE]['multiply'])
          when '4'
-           '=> Dividing'
+           format(MESSAGES[LANGUAGE]['divide'])
          end
 
   x = "A random line of code"
 
-  puts word + " the two numbers..."
+  puts format(MESSAGES[LANGUAGE]['two_numbers'], word: "#{word}")
 end
 
 def messages(message, lang='en')
   MESSAGES[lang][message]
 end
-
-
 
 prompt('welcome')
 
@@ -61,10 +59,7 @@ loop do
   end
 end
 
-#prompt('hello')#,"#{name}!") +  
-
-#puts "Hi #{name}!" #handle interpolation by using the prompt and not using yaml
-interpolation_prompt('hello', name)
+puts format(MESSAGES[LANGUAGE]['hello'], name: "#{name}")
 
 loop do # main loop
   number1 = ''
@@ -91,14 +86,6 @@ loop do # main loop
     end
   end
 
-  # operator_prompt = <<-MSG
-  #   What operation would you like to perform?
-  #   1) add
-  #   2) subtract
-  #   3) multiply
-  #   4) divide
-  # MSG
-
   prompt('operator_prompt')
 
   operator = ''
@@ -112,9 +99,7 @@ loop do # main loop
     end
   end
 
-  #prompt("#{operation_to_message(operator)} " + messages('two_numbers'))
-
-  operation_to_message(operator) #this is where you left off
+  operation_to_message(operator)
 
   result = case operator
            when '1'
@@ -127,9 +112,7 @@ loop do # main loop
              number1.to_f() / number2.to_f()
            end
 
-  #prompt(('result') + "#{result}")
-  puts "The result is #{result}"
-
+  puts format(MESSAGES[LANGUAGE]['result'], result: "#{result}" )
   prompt('another_one')
   answer = Kernel.gets().chomp
   break unless answer.downcase().start_with?('y')

@@ -2,13 +2,13 @@
 en:
   welcome: "Welcome to Calculator! Enter your name:"
   valid_name: "Make sure to enter a valid name."
-  hello: "Hi"
+  hello: "=> Hi %{name}"
   number1: "What's the first number?"
   incorrect_number: "Hmm... that doesn't look like a valid number"
   number2: "What's the second number?"
   one_to_four_choice: "Must choose 1, 2, 3, or 4"
-  two_numbers: "the two numbers..."
-  result: "The result is "
+  two_numbers: "%{word} the two numbers..."
+  result: "=> The result is %{result}"
   another_one: "Do you want to perform another calculation? (Y to calculate again)"
   good_bye: "Thank you for using the calculator. Good bye!"
   operator_prompt: |
@@ -17,19 +17,34 @@ en:
        2) subtract
        3) multiply
        4) divide
+  add: '=> Adding'
+  subtract: '=> Subtracting'
+  multiply: '=> Multiplying'
+  divide: '=> Dividing'
   
 es:
   welcome: '¡Bienvenido a Calculadora! Introduzca su nombre'
   valid_name: 'Asegúrese de ingresar un nombre válido.'
-  hello: 'Hola'
+  hello: 'Hola %{name}!'
   number1: '¿Cuál es el primer número?'
   incorrect_number: 'Hmm... ese no parece un número válido'
   number2: '¿Cuál es el segundo número?'
   one_to_four_choice: 'Debes elegir 1, 2, 3 o 4'
-  two_numbers: 'los dos numeros...'
-  result: 'El resultado es '
+  two_numbers: '%{word} los dos numeros...'
+  result: '=> El resultado es %{result}'
   another_one: '¿Quieres realizar otro cálculo? (Y para calcular nuevamente)'
   good_bye: 'Gracias por usar la calculadora. ¡Adiós!'
+  operator_prompt: |
+    ¿Qué operación te gustaría realizar?
+    1) agregar
+    2) restar
+    3) multiplicar
+    4) dividir
+  add: '=> Añadiendo'
+  subtract: '=> Restando'
+  multiply: '=> Multiplicando'
+  divide: '=> Divisor'
+
 
 
 # ... rest of file omitted for brevity
