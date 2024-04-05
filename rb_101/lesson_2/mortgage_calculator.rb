@@ -24,7 +24,7 @@ def prompt_three_interpolation(value, inter1, inter2, inter3) # used for three
 end
 
 def clear_screen
-  puts "\e[2J\e[f"
+  system("clear") || system("cls")
 end
 
 def input_your_name
@@ -105,10 +105,9 @@ def percent_check?(interest_rate_years)
   # when they did, just with a percentage sign
 end
 
-def interest_rate_check?(interest_rate_years) # interest_rate_years
+def interest_rate_check?(interest_rate_years)
   value = zero_interest_check?(interest_rate_years)
   if interest_rate_years >= PREDATORY_INTEREST
-    interest_rate_years.round(4)
     prompt_two_interpolation('preditory',
                              interest_rate_years / 100,
                              interest_rate_years / 10)

@@ -15,7 +15,7 @@ ask_annual: |
      (Example: 8.25% should be entered as .0825)
      (Example: 25% should be entered as .25)
      (Example: 100% would be entered as 1)
-percentage:  |
+percentage: |
   I noticed you typed a percent sign. 
      Please convert the percentage to a decimal given the examples provided
 zero_interest: | 
