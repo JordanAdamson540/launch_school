@@ -1,7 +1,12 @@
+require 'Yaml'
+MESSAGE = YAML.load_file('jordan_adamson_rock_paper_scissors.yml')
+
 VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 
-def prompt(phrase)
-  puts "=> #{phrase}"
+def prompt(phrase, interpolation=nil, interpolation2=nil, interpolation3=nil)
+  puts "=> #{format(MESSAGE[phrase], one:   interpolation, 
+                                     two:   interpolation2,
+                                     three: interpolation3)}"
 end
 
 def one_letter_s_given?(response)
@@ -72,15 +77,15 @@ end
 
 def prompts_various_wrong_user_inputs(response)
   if one_letter_s_given?(response)
-    prompt('You cannot abbreviate to one letter (Scissors and Spock both start with "S"). Type the entire response, please.')
+    prompt('one_letter_s')
   elsif shorthand_for_spock_or_scissors?(response)
-    prompt('Type out the full word for Scissors or Spock')
+    prompt('full_word_scissors_spock')
   elsif shorthand_for_rock_paper_lizard?(response)
-    prompt('You must type out Rock, Paper, or Lizard.')
+    prompt('type_rock_paper_lizard')
   elsif response.empty?
-    prompt('You must give a response. You left the blank empty.')
+    prompt('left_empty')
   elsif !VALID_CHOICES.include?(response)
-    prompt('You must select a valid choice.')
+    prompt('select_valid_option')
   end
 end
 
@@ -91,29 +96,29 @@ def prompt_how_to_play(user_response)
 end
 
 def prompt_what_beats_what
-  prompt(rules_of_game)
+  prompt('rules_of_game')
 end
 
-def rules_of_game
-  <<~MSG
-  The game is the exact same as Rock-Paper-Scissors, but with two new options...
-                            Lizard and Spock
-            Here are the various ways players win, lose, or tie
-     Rock:     beats Scissors and Lizard;   loses to Paper    and Spock
-     Paper:    beats Rock     and Spock;    loses to Scissors and Lizard
-     Scissors: beats Paper    and Lizard;   loses to Rock     and Spock
-     Spock:    beats Rock     and Scissors; loses to Paper    and Lizard
-     Lizard:   beats Paper    and Spock;    loses to Rock     and Scissors
-  MSG
-end
+# def rules_of_game
+#   <<~MSG
+#   The game is the exact same as Rock-Paper-Scissors, but with two new options...
+#                             Lizard and Spock
+#             Here are the various ways players win, lose, or tie
+#      Rock:     beats Scissors and Lizard;   loses to Paper    and Spock
+#      Paper:    beats Rock     and Spock;    loses to Scissors and Lizard
+#      Scissors: beats Paper    and Lizard;   loses to Rock     and Spock
+#      Spock:    beats Rock     and Scissors; loses to Paper    and Lizard
+#      Lizard:   beats Paper    and Spock;    loses to Rock     and Scissors
+#   MSG
+# end
 
 def prompts_various_wrong_user_names(name)
   if name.empty?
-    prompt('You must type a valid name and not leave the response blank')
+    prompt('no_blank_name')
   elsif /[0-9]/.match?(name)
-    prompt('You cannot use numbers')
+    prompt('no_numbers')
   elsif VALID_CHOICES.include?(name.downcase)
-    prompt('Your name surly cannot be one of the objects, a lizard, or Spock himself. Enter your real name.')
+    prompt('object_lizard_spock_mistype')
   end
 end
 
@@ -126,37 +131,44 @@ end
 
 def display_results(player, computer)
   if win?(player, computer)
-    prompt('You Won!')
+    prompt('win')
   elsif win?(computer, player)
-    prompt('Computer Won!')
+    prompt('cpu_win')
   else
-    prompt("It's a tie")
+    prompt("tie")
   end
 end
 
 def win?(first, second)
   (first == 'rock' && second == 'scissors') ||
     (first == 'paper' && second == 'rock') ||
-    (first == 'scissors' && second == 'paper')
+    (first == 'scissors' && second == 'paper') ||
+    (first == 'rock' && second == 'lizard') ||
+    (first == 'paper' && second == 'spock') ||
+    (first == 'scissors' && second == 'lizard') ||
+    (first == 'spock' && second == 'rock') ||
+    (first == 'spock' && second == 'scissors') ||
+    (first == 'lizard' && second == 'paper') ||
+    (first == 'lizard' && second == 'spock')
 end
 
 # start of program
 
 user_name = ''
 loop do
-  prompt('Hello. And welcome to Rock, Paper, Scissors, Spock, Lizard. What is your name?')
+  prompt('welcome_and_name')
   user_name = response
   prompts_various_wrong_user_names(user_name)
   next if VALID_CHOICES.include?(user_name.downcase)
   break if acceptable_name_format?(user_name)
 end
 
-prompt("Hello #{user_name}. It is time to play a familiar game with a twist.")
+prompt('greeting_with_name', user_name)
 
 loop do
   user_response = ''
   loop do
-    prompt('What is your choice between: Rock, Paper, Scissors, Spock, Lizard? (or type help for how the game works)')
+    prompt('game_options_or_help')
     user_response = response.downcase
     prompts_various_wrong_user_inputs(user_response)
     prompt_how_to_play(user_response)
@@ -165,18 +177,28 @@ loop do
 
   computer_choice = VALID_CHOICES.sample
 
-  prompt("You chose: #{user_response}; Computer chose: #{computer_choice}")
+  prompt('user_chose_computer_chose', user_response, computer_choice)
 
   display_results(user_response, computer_choice)
 
-  prompt('Do you want to play again?')
-  play_again_response = response.downcase
+  prompt('ask_play_again')
+
+  play_again_response = ''
+  loop do
+    play_again_response = response.downcase.chr
+    break if %w(y n).include?(play_again_response)
+    prompt('type_yes_or_no')
+  end
+
   break unless play_again_response.start_with?('y')
 end
-prompt("Thank you for playing Rock, Paper, Scissors, Spock, Lizard #{user_name}. Have a good day.")
+prompt('goodbye_with_name', user_name)
 
-# Rock Paper Scissors are the only computer choices so far
-# you need to get text to yaml file
 # cleaning up the body of the loop (possibly)
 # keeping score (Spock and Lizard always end in a tie currently when the user selects)
 # make a test list when you complete everything above before you move on
+
+# new commit
+# lizard and spock logic added
+# loop for play again response
+# yaml file

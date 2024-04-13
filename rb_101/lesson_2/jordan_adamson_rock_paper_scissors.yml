@@ -1,0 +1,27 @@
+one_letter_s: 'You cannot abbreviate to one letter (Scissors and Spock both start with "S"). Type the entire response, please.'
+full_word_scissors_spock: 'Type out the full word for Scissors or Spock'
+type_rock_paper_lizard: 'You must type out Rock, Paper, or Lizard.'
+left_empty: 'You must give a response. You left the blank empty.'
+select_valid_option: 'You must select a valid choice.'
+rules_of_game: |
+  The game is the exact same as Rock-Paper-Scissors, but with two new options...
+                            Lizard and Spock
+            Here are the various ways players win, lose, or tie
+     Rock:     beats Scissors and Lizard;   loses to Paper    and Spock
+     Paper:    beats Rock     and Spock;    loses to Scissors and Lizard
+     Scissors: beats Paper    and Lizard;   loses to Rock     and Spock
+     Spock:    beats Rock     and Scissors; loses to Paper    and Lizard
+     Lizard:   beats Paper    and Spock;    loses to Rock     and Scissors
+no_blank_name: 'You must type a valid name and not leave the response blank'
+no_numbers: 'You cannot use numbers'
+object_lizard_spock_mistype: 'Your name surly cannot be one of the objects, a lizard, or Spock himself. Enter your real name.'
+win: 'You Won!'
+cpu_win: 'Computer Won!'
+tie: "It's a tie"
+welcome_and_name: 'Hello. And welcome to Rock, Paper, Scissors, Spock, Lizard. What is your name?'
+greeting_with_name: "Hello %{one}. It is time to play a familiar game with a twist."
+game_options_or_help: 'What is your choice between: Rock, Paper, Scissors, Spock, Lizard? (or type help for how the game works)'
+user_chose_computer_chose: "You chose: %{one}; Computer chose: %{two}"
+ask_play_again: 'Do you want to play again? (type yes or no)'
+type_yes_or_no: 'You must type yes or no'
+goodbye_with_name: "Thank you for playing Rock, Paper, Scissors, Spock, Lizard %{one}. Have a good day."
