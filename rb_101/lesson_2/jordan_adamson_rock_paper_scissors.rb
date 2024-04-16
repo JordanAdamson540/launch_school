@@ -9,6 +9,27 @@ def prompt(phrase, interpolation=nil, interpolation2=nil, interpolation3=nil)
                                      three: interpolation3)}"
 end
 
+def acceptable_responses?(user_response)
+  return true if shorthand_for_rock_paper_lizard?(user_response)
+  return true if shorthand_for_spock_or_scissors?(user_response)
+  return true if VALID_CHOICES.include?(user_response)
+  false
+end
+
+def full_name_generator(user_response)
+  if shorthand_rock_checker?(user_response)
+    'rock'
+  elsif shorthand_paper_checker?(user_response)
+    'paper'
+  elsif shorthand_scissors_checker?(user_response)
+    'scissors'
+  elsif shorthand_spock_checker?(user_response)
+    'spock'
+  elsif shorthand_lizard_checker?(user_response)
+    'lizard'
+  end
+end
+
 def one_letter_s_given?(response)
   /^[s]$/i.match?(response)
 end
@@ -23,15 +44,6 @@ end
 def shorthand_for_spock_or_scissors?(response)
   return true if shorthand_spock_checker?(response)
   return true if shorthand_scissors_checker?(response)
-  false
-end
-
-def shorthand_for_rock_paper_scissors_lizard_spock?(response)
-  return true if shorthand_spock_checker?(response)
-  return true if shorthand_scissors_checker?(response)
-  return true if shorthand_rock_checker?(response)
-  return true if shorthand_paper_checker?(response)
-  return true if shorthand_lizard_checker?(response)
   false
 end
 
@@ -73,18 +85,15 @@ def shorthand_lizard_checker?(response)
   return true if /^liz$/i.match?(response)
   return true if /^liza$/i.match?(response)
   return true if /^lizar$/i.match?(response)
+  false
 end
 
 def prompts_various_wrong_user_inputs(response)
   if one_letter_s_given?(response)
     prompt('one_letter_s')
-  elsif shorthand_for_spock_or_scissors?(response)
-    prompt('full_word_scissors_spock')
-  elsif shorthand_for_rock_paper_lizard?(response)
-    prompt('type_rock_paper_lizard')
   elsif response.empty?
     prompt('left_empty')
-  elsif !VALID_CHOICES.include?(response)
+  elsif !acceptable_responses?(response)
     prompt('select_valid_option')
   end
 end
@@ -170,6 +179,8 @@ def reset_scores(player_score, computer_score, ties)
   [player_score, computer_score, ties]
 end
 
+# start of program
+
 user_name = ''
 player_score = 0
 computer_score = 0
@@ -193,8 +204,11 @@ loop do
     user_response = response.downcase
     prompts_various_wrong_user_inputs(user_response)
     prompt_how_to_play(user_response)
-    break if VALID_CHOICES.include?(user_response)
+    break if acceptable_responses?(user_response)
   end
+
+  user_response = full_name_generator(user_response) \
+    unless VALID_CHOICES.include?(user_response)
 
   computer_choice = VALID_CHOICES.sample
 
@@ -229,13 +243,5 @@ end
 prompt('goodbye_with_name', user_name)
 
 # cleaning up the body of the loop (possibly)
-# keeping score
 # clean up logic of win? method
 # make a test list when you complete everything above before you move on
-
-
-
-# new commit
-# lizard and spock logic added
-# loop for play again response
-# yaml file
