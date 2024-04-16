@@ -99,19 +99,6 @@ def prompt_what_beats_what
   prompt('rules_of_game')
 end
 
-# def rules_of_game
-#   <<~MSG
-#   The game is the exact same as Rock-Paper-Scissors, but with two new options...
-#                             Lizard and Spock
-#             Here are the various ways players win, lose, or tie
-#      Rock:     beats Scissors and Lizard;   loses to Paper    and Spock
-#      Paper:    beats Rock     and Spock;    loses to Scissors and Lizard
-#      Scissors: beats Paper    and Lizard;   loses to Rock     and Spock
-#      Spock:    beats Rock     and Scissors; loses to Paper    and Lizard
-#      Lizard:   beats Paper    and Spock;    loses to Rock     and Scissors
-#   MSG
-# end
-
 def prompts_various_wrong_user_names(name)
   if name.empty?
     prompt('no_blank_name')
@@ -125,6 +112,7 @@ end
 def acceptable_name_format?(name)
   /^[A-z]+[\-\']?[A-z]*[\s\-]?[A-z]*[\-\'\s]?[A-z]*$/.match?(name)
 end
+
 def response
   gets.chomp.strip
 end
@@ -152,9 +140,41 @@ def win?(first, second)
     (first == 'lizard' && second == 'spock')
 end
 
-# start of program
+def continuously_updating_score_keeper(user_response, 
+                                       computer_choice, 
+                                       user_score, 
+                                       computer_score, 
+                                       ties)
+  if win?(user_response, computer_choice)
+    user_score += 1
+  elsif win?(computer_choice, user_response)
+    computer_score += 1
+  else
+    ties += 1
+  end
+  [user_score, computer_score, ties]
+end
+
+def display_grand_champion(player_score, computer_score, user_name)
+  if player_score >= 3
+    prompt('player_winner', user_name)
+  elsif computer_score >= 3
+    prompt('computer_winner')
+  end
+end
+
+def reset_scores(player_score, computer_score, ties)
+  player_score = 0
+  computer_score = 0
+  ties = 0
+  [player_score, computer_score, ties]
+end
 
 user_name = ''
+player_score = 0
+computer_score = 0
+ties = 0
+
 loop do
   prompt('welcome_and_name')
   user_name = response
@@ -166,6 +186,7 @@ end
 prompt('greeting_with_name', user_name)
 
 loop do
+  loop do
   user_response = ''
   loop do
     prompt('game_options_or_help')
@@ -181,6 +202,19 @@ loop do
 
   display_results(user_response, computer_choice)
 
+  player_score, computer_score, ties = \
+    continuously_updating_score_keeper(user_response,
+                                       computer_choice,
+                                       player_score,
+                                       computer_score,
+                                       ties)
+  prompt('current_score', player_score, computer_score, ties)
+  break if player_score >= 3 || computer_score >= 3
+  end
+  display_grand_champion(player_score, computer_score, user_name)
+  player_score, computer_score, ties = reset_scores(player_score,
+                                                    computer_score,
+                                                    ties)
   prompt('ask_play_again')
 
   play_again_response = ''
@@ -195,8 +229,11 @@ end
 prompt('goodbye_with_name', user_name)
 
 # cleaning up the body of the loop (possibly)
-# keeping score (Spock and Lizard always end in a tie currently when the user selects)
+# keeping score
+# clean up logic of win? method
 # make a test list when you complete everything above before you move on
+
+
 
 # new commit
 # lizard and spock logic added

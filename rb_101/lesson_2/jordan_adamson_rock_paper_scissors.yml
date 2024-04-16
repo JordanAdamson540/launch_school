@@ -22,6 +22,13 @@ welcome_and_name: 'Hello. And welcome to Rock, Paper, Scissors, Spock, Lizard. W
 greeting_with_name: "Hello %{one}. It is time to play a familiar game with a twist."
 game_options_or_help: 'What is your choice between: Rock, Paper, Scissors, Spock, Lizard? (or type help for how the game works)'
 user_chose_computer_chose: "You chose: %{one}; Computer chose: %{two}"
+current_score: |
+  The player score is: %{one}. 
+     The computer score is: %{two}. 
+     The current number of ties is: %{three}. 
+     First one to three (ties not included) is the winner.
 ask_play_again: 'Do you want to play again? (type yes or no)'
 type_yes_or_no: 'You must type yes or no'
 goodbye_with_name: "Thank you for playing Rock, Paper, Scissors, Spock, Lizard %{one}. Have a good day."
+player_winner: "Congratulations %{one}, you are the Grand Champion!"
+computer_winner: 'The computer has been declared the Grand Champion!'
