@@ -179,12 +179,18 @@ def reset_scores(player_score, computer_score, ties)
   [player_score, computer_score, ties]
 end
 
+def clear_screen
+  system('clear')
+end
+
 # start of program
 
 user_name = ''
 player_score = 0
 computer_score = 0
 ties = 0
+
+clear_screen
 
 loop do
   prompt('welcome_and_name')
@@ -238,10 +244,18 @@ loop do
     prompt('type_yes_or_no')
   end
 
-  break unless play_again_response.start_with?('y')
+  break unless play_again_response.start_with?('y') # fix this to be more than just 'y'
 end
+
+clear_screen
+
 prompt('goodbye_with_name', user_name)
 
+# get the screen to clear a few times automatically
+# work on ordering the methods (try and group similar ones together as well as getting helper methods near main methods)
+# 
 # cleaning up the body of the loop (possibly)
 # clean up logic of win? method
+# rubocop
 # make a test list when you complete everything above before you move on
+

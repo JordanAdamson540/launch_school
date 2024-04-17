@@ -18,7 +18,7 @@ object_lizard_spock_mistype: 'Your name surly cannot be one of the objects, a li
 win: 'You Won!'
 cpu_win: 'Computer Won!'
 tie: "It's a tie"
-welcome_and_name: 'Hello. And welcome to Rock, Paper, Scissors, Spock, Lizard. What is your name?'
+welcome_and_name: 'Hello! Welcome to Rock, Paper, Scissors, Spock, Lizard. What is your name?'
 greeting_with_name: "Hello %{one}. It is time to play a familiar game with a twist."
 game_options_or_help: 'What is your choice between: Rock, Paper, Scissors, Spock, Lizard? (or type help for how the game works)'
 user_chose_computer_chose: "You chose: %{one}; Computer chose: %{two}"
