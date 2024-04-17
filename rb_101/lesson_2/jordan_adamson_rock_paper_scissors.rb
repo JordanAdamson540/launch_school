@@ -3,31 +3,69 @@ MESSAGE = YAML.load_file('jordan_adamson_rock_paper_scissors.yml')
 
 VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 
+# side effects
+
 def prompt(phrase, interpolation=nil, interpolation2=nil, interpolation3=nil)
   puts "=> #{format(MESSAGE[phrase], one:   interpolation, 
                                      two:   interpolation2,
                                      three: interpolation3)}"
 end
 
+def prompts_various_wrong_user_names(name)
+  if name.empty?
+    prompt('no_blank_name')
+  elsif /[0-9]/.match?(name)
+    prompt('no_numbers')
+  elsif VALID_CHOICES.include?(name.downcase)
+    prompt('object_lizard_spock_mistype')
+  end
+end
+
+def prompts_various_wrong_user_inputs(response)
+  if one_letter_s_given?(response)
+    prompt('one_letter_s')
+  elsif response.empty?
+    prompt('left_empty')
+  elsif !acceptable_responses?(response)
+    prompt('select_valid_option')
+  end
+end
+
+def prompt_how_to_play(user_response)
+  case user_response
+  when 'help' then prompt_what_beats_what
+  end
+end
+
+def prompt_what_beats_what
+  prompt('rules_of_game')
+end
+
+def display_results(player, computer)
+  if win?(player, computer)
+    prompt('win')
+  elsif win?(computer, player)
+    prompt('cpu_win')
+  else
+    prompt("tie")
+  end
+end
+
+def display_grand_champion(player_score, computer_score, user_name)
+  if player_score >= 3
+    prompt('player_winner', user_name)
+  elsif computer_score >= 3
+    prompt('computer_winner')
+  end
+end
+
+# logic for player response inputs
+
 def acceptable_responses?(user_response)
   return true if shorthand_for_rock_paper_lizard?(user_response)
   return true if shorthand_for_spock_or_scissors?(user_response)
   return true if VALID_CHOICES.include?(user_response)
   false
-end
-
-def full_name_generator(user_response)
-  if shorthand_rock_checker?(user_response)
-    'rock'
-  elsif shorthand_paper_checker?(user_response)
-    'paper'
-  elsif shorthand_scissors_checker?(user_response)
-    'scissors'
-  elsif shorthand_spock_checker?(user_response)
-    'spock'
-  elsif shorthand_lizard_checker?(user_response)
-    'lizard'
-  end
 end
 
 def one_letter_s_given?(response)
@@ -88,51 +126,31 @@ def shorthand_lizard_checker?(response)
   false
 end
 
-def prompts_various_wrong_user_inputs(response)
-  if one_letter_s_given?(response)
-    prompt('one_letter_s')
-  elsif response.empty?
-    prompt('left_empty')
-  elsif !acceptable_responses?(response)
-    prompt('select_valid_option')
-  end
-end
+# logic
 
-def prompt_how_to_play(user_response)
-  case user_response
-  when 'help' then prompt_what_beats_what
-  end
-end
-
-def prompt_what_beats_what
-  prompt('rules_of_game')
-end
-
-def prompts_various_wrong_user_names(name)
-  if name.empty?
-    prompt('no_blank_name')
-  elsif /[0-9]/.match?(name)
-    prompt('no_numbers')
-  elsif VALID_CHOICES.include?(name.downcase)
-    prompt('object_lizard_spock_mistype')
-  end
-end
-
-def acceptable_name_format?(name)
-  /^[A-z]+[\-\']?[A-z]*[\s\-]?[A-z]*[\-\'\s]?[A-z]*$/.match?(name)
+def clear_screen
+  system('clear')
 end
 
 def response
   gets.chomp.strip
 end
 
-def display_results(player, computer)
-  if win?(player, computer)
-    prompt('win')
-  elsif win?(computer, player)
-    prompt('cpu_win')
-  else
-    prompt("tie")
+def acceptable_name_format?(name)
+  /^[A-z]+[\-\']?[A-z]*[\s\-]?[A-z]*[\-\'\s]?[A-z]*$/.match?(name)
+end
+
+def full_name_generator(user_response)
+  if shorthand_rock_checker?(user_response)
+    'rock'
+  elsif shorthand_paper_checker?(user_response)
+    'paper'
+  elsif shorthand_scissors_checker?(user_response)
+    'scissors'
+  elsif shorthand_spock_checker?(user_response)
+    'spock'
+  elsif shorthand_lizard_checker?(user_response)
+    'lizard'
   end
 end
 
@@ -164,23 +182,11 @@ def continuously_updating_score_keeper(user_response,
   [user_score, computer_score, ties]
 end
 
-def display_grand_champion(player_score, computer_score, user_name)
-  if player_score >= 3
-    prompt('player_winner', user_name)
-  elsif computer_score >= 3
-    prompt('computer_winner')
-  end
-end
-
 def reset_scores(player_score, computer_score, ties)
   player_score = 0
   computer_score = 0
   ties = 0
   [player_score, computer_score, ties]
-end
-
-def clear_screen
-  system('clear')
 end
 
 # start of program
@@ -244,16 +250,15 @@ loop do
     prompt('type_yes_or_no')
   end
 
-  break unless play_again_response.start_with?('y') # fix this to be more than just 'y'
+  break unless play_again_response.start_with?('y')
 end
 
 clear_screen
 
 prompt('goodbye_with_name', user_name)
 
-# get the screen to clear a few times automatically
-# work on ordering the methods (try and group similar ones together as well as getting helper methods near main methods)
-# 
+# work on ordering the methods (you have done this for the most part)
+
 # cleaning up the body of the loop (possibly)
 # clean up logic of win? method
 # rubocop
