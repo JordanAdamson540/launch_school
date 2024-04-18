@@ -2,6 +2,10 @@ require 'Yaml'
 MESSAGE = YAML.load_file('jordan_adamson_rock_paper_scissors.yml')
 
 VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
+RESET_SCORE = 0
+WINNER_TOTAL_SCORE = 3
+ONE_MATCHUP_POINT_ADDER = 1
+PAUSE_TIME = 3
 
 # side effects
 
@@ -26,7 +30,7 @@ def prompts_various_wrong_user_inputs(response)
     prompt('one_letter_s')
   elsif response.empty?
     prompt('left_empty')
-  elsif !acceptable_responses?(response)
+  elsif !acceptable_responses?(response) && response != 'help'
     prompt('select_valid_option')
   end
 end
@@ -52,9 +56,9 @@ def display_results(player, computer)
 end
 
 def display_grand_champion(player_score, computer_score, user_name)
-  if player_score >= 3
+  if player_score >= WINNER_TOTAL_SCORE
     prompt('player_winner', user_name)
-  elsif computer_score >= 3
+  elsif computer_score >= WINNER_TOTAL_SCORE
     prompt('computer_winner')
   end
 end
@@ -76,12 +80,17 @@ def shorthand_for_rock_paper_lizard?(response)
   return true if shorthand_rock_checker?(response)
   return true if shorthand_paper_checker?(response)
   return true if shorthand_lizard_checker?(response)
+  return true if response.include?('rock')
+  return true if response.include?('paper')
+  return true if response.include?('lizard')
   false
 end
 
 def shorthand_for_spock_or_scissors?(response)
   return true if shorthand_spock_checker?(response)
   return true if shorthand_scissors_checker?(response)
+  return true if response.include?('spock')
+  return true if response.include?('scissors')
   false
 end
 
@@ -126,7 +135,7 @@ def shorthand_lizard_checker?(response)
   false
 end
 
-# other logic
+# small logic
 
 def clear_screen
   system('clear')
@@ -138,6 +147,10 @@ end
 
 def acceptable_name_format?(name)
   /^[A-z]+[\-\']?[A-z]*[\s\-]?[A-z]*[\-\'\s]?[A-z]*$/.match?(name)
+end
+
+def delay_time_seconds(seconds)
+  sleep(seconds)
 end
 
 def full_name_generator(user_response)
@@ -184,66 +197,96 @@ def lizard_beats_?(second)
   ['paper', 'spock'].include?(second)
 end
 
+# large logic
+
 def continuously_updating_score_keeper(user_response,
                                        computer_choice,
                                        user_score,
                                        computer_score,
                                        ties)
   if win?(user_response, computer_choice)
-    user_score += 1
+    user_score += ONE_MATCHUP_POINT_ADDER
   elsif win?(computer_choice, user_response)
-    computer_score += 1
+    computer_score += ONE_MATCHUP_POINT_ADDER
   else
-    ties += 1
+    ties += ONE_MATCHUP_POINT_ADDER
   end
   [user_score, computer_score, ties]
 end
 
+def user_or_computer_declared_winner?(player_score, computer_score)
+  player_score >= WINNER_TOTAL_SCORE || computer_score >= WINNER_TOTAL_SCORE
+end
+
 def reset_scores
-  reset_player_score = 0
-  reset_computer_score = 0
-  reset_ties = 0
+  reset_player_score = RESET_SCORE
+  reset_computer_score = RESET_SCORE
+  reset_ties = RESET_SCORE
   [reset_player_score, reset_computer_score, reset_ties]
+end
+
+# high level abstracted logic
+
+def aquire_name
+  loop do
+    prompt('welcome_and_name')
+    user_name = response
+    prompts_various_wrong_user_names(user_name)
+    next if VALID_CHOICES.include?(user_name.downcase)
+    break user_name if acceptable_name_format?(user_name)
+  end
+end
+
+def aquire_user_response
+  loop do
+    prompt('game_options_or_help')
+    user_response = response.downcase
+    prompts_various_wrong_user_inputs(user_response)
+    prompt_how_to_play(user_response)
+    break user_response if acceptable_responses?(user_response)
+  end
+end
+
+def aquire_play_again
+  loop do
+    play_again_response = response.downcase.chr
+    break play_again_response if %w(y n).include?(play_again_response)
+    prompt('type_yes_or_no')
+  end
+end
+
+def aquire_user_and_computer_responses
+  user_response = aquire_user_response
+  user_response = full_name_generator(user_response) \
+    unless VALID_CHOICES.include?(user_response)
+  computer_choice = VALID_CHOICES.sample
+  prompt('user_chose_computer_chose', user_response, computer_choice)
+  delay_time_seconds(PAUSE_TIME)
+  display_results(user_response, computer_choice)
+  delay_time_seconds(PAUSE_TIME)
+  [user_response, computer_choice]
+end
+
+def aquire_name_and_how_to_play
+  clear_screen
+  user_name = aquire_name
+  prompt('greeting_with_name', user_name)
+  delay_time_seconds(PAUSE_TIME)
+  prompt_how_to_play('help')
 end
 
 # start of program
 
 user_name = ''
-player_score = 0
-computer_score = 0
-ties = 0
+player_score = RESET_SCORE
+computer_score = RESET_SCORE
+ties = RESET_SCORE
 
-clear_screen
-
-loop do
-  prompt('welcome_and_name')
-  user_name = response
-  prompts_various_wrong_user_names(user_name)
-  next if VALID_CHOICES.include?(user_name.downcase)
-  break if acceptable_name_format?(user_name)
-end
-
-prompt('greeting_with_name', user_name)
+user_name = aquire_name_and_how_to_play
 
 loop do
   loop do
-    user_response = ''
-    loop do
-      prompt('game_options_or_help')
-      user_response = response.downcase
-      prompts_various_wrong_user_inputs(user_response)
-      prompt_how_to_play(user_response)
-      break if acceptable_responses?(user_response)
-    end
-
-    user_response = full_name_generator(user_response) \
-      unless VALID_CHOICES.include?(user_response)
-    computer_choice = VALID_CHOICES.sample
-
-    prompt('user_chose_computer_chose', user_response, computer_choice)
-
-    display_results(user_response, computer_choice)
-
+    user_response, computer_choice = aquire_user_and_computer_responses
     player_score, computer_score, ties = \
       continuously_updating_score_keeper(user_response,
                                          computer_choice,
@@ -251,25 +294,17 @@ loop do
                                          computer_score,
                                          ties)
     prompt('current_score', player_score, computer_score, ties)
-    break if player_score >= 3 || computer_score >= 3
+    delay_time_seconds(PAUSE_TIME)
+    break if user_or_computer_declared_winner?(player_score, computer_score)
   end
   display_grand_champion(player_score, computer_score, user_name)
   player_score, computer_score, ties = reset_scores
 
   prompt('ask_play_again')
-
-  play_again_response = ''
-  loop do
-    play_again_response = response.downcase.chr
-    break if %w(y n).include?(play_again_response)
-    prompt('type_yes_or_no')
-  end
-
+  play_again_response = aquire_play_again
+  clear_screen
   break unless play_again_response.start_with?('y')
 end
 
 clear_screen
-
 prompt('goodbye_with_name', user_name)
-
-# make a test list when you complete everything above before you move on

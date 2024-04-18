@@ -12,6 +12,12 @@ rules_of_game: |
      Scissors: beats Paper    and Lizard;   loses to Rock     and Spock
      Spock:    beats Rock     and Scissors; loses to Paper    and Lizard
      Lizard:   beats Paper    and Spock;    loses to Rock     and Scissors
+     
+     If you and the computer select the same thing, the result is a tie.
+
+     You will play against the computer. 
+     Each time you win a matchup you get a point.
+     The first one to 3 points is the winner!
 no_blank_name: 'You must type a valid name and not leave the response blank'
 no_numbers: 'You cannot use numbers'
 object_lizard_spock_mistype: 'Your name surly cannot be one of the objects, a lizard, or Spock himself. Enter your real name.'
@@ -23,10 +29,12 @@ greeting_with_name: "Hello %{one}. It is time to play a familiar game with a twi
 game_options_or_help: 'What is your choice between: Rock, Paper, Scissors, Spock, Lizard? (or type help for how the game works)'
 user_chose_computer_chose: "You chose: %{one}; Computer chose: %{two}"
 current_score: |
-  The player score is: %{one}. 
+  ---------------------------------------------------------
+     The player score is: %{one}. 
      The computer score is: %{two}. 
      The current number of ties is: %{three}. 
      First one to three (ties not included) is the winner.
+     ---------------------------------------------------------
 ask_play_again: 'Do you want to play again? (type yes or no)'
 type_yes_or_no: 'You must type yes or no'
 goodbye_with_name: "Thank you for playing Rock, Paper, Scissors, Spock, Lizard %{one}. Have a good day."
