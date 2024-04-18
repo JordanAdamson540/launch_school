@@ -6,8 +6,8 @@ VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 # side effects
 
 def prompt(phrase, interpolation=nil, interpolation2=nil, interpolation3=nil)
-  puts "=> #{format(MESSAGE[phrase], one:   interpolation, 
-                                     two:   interpolation2,
+  puts "=> #{format(MESSAGE[phrase], one: interpolation,
+                                     two: interpolation2,
                                      three: interpolation3)}"
 end
 
@@ -126,7 +126,7 @@ def shorthand_lizard_checker?(response)
   false
 end
 
-# logic
+# other logic
 
 def clear_screen
   system('clear')
@@ -155,22 +155,39 @@ def full_name_generator(user_response)
 end
 
 def win?(first, second)
-  (first == 'rock' && second == 'scissors') ||
-    (first == 'paper' && second == 'rock') ||
-    (first == 'scissors' && second == 'paper') ||
-    (first == 'rock' && second == 'lizard') ||
-    (first == 'paper' && second == 'spock') ||
-    (first == 'scissors' && second == 'lizard') ||
-    (first == 'spock' && second == 'rock') ||
-    (first == 'spock' && second == 'scissors') ||
-    (first == 'lizard' && second == 'paper') ||
-    (first == 'lizard' && second == 'spock')
+  case first
+  when 'rock'     then rock_beats_?(second)
+  when 'paper'    then paper_beats_?(second)
+  when 'scissors' then scissors_beats_?(second)
+  when 'spock'    then spock_beats_?(second)
+  when 'lizard'   then lizard_beats_?(second)
+  end
 end
 
-def continuously_updating_score_keeper(user_response, 
-                                       computer_choice, 
-                                       user_score, 
-                                       computer_score, 
+def rock_beats_?(second)
+  ['scissors', 'lizard'].include?(second)
+end
+
+def paper_beats_?(second)
+  ['rock', 'spock'].include?(second)
+end
+
+def scissors_beats_?(second)
+  ['paper', 'lizard'].include?(second)
+end
+
+def spock_beats_?(second)
+  ['rock', 'scissors'].include?(second)
+end
+
+def lizard_beats_?(second)
+  ['paper', 'spock'].include?(second)
+end
+
+def continuously_updating_score_keeper(user_response,
+                                       computer_choice,
+                                       user_score,
+                                       computer_score,
                                        ties)
   if win?(user_response, computer_choice)
     user_score += 1
@@ -182,11 +199,11 @@ def continuously_updating_score_keeper(user_response,
   [user_score, computer_score, ties]
 end
 
-def reset_scores(player_score, computer_score, ties)
-  player_score = 0
-  computer_score = 0
-  ties = 0
-  [player_score, computer_score, ties]
+def reset_scores
+  reset_player_score = 0
+  reset_computer_score = 0
+  reset_ties = 0
+  [reset_player_score, reset_computer_score, reset_ties]
 end
 
 # start of program
@@ -210,37 +227,35 @@ prompt('greeting_with_name', user_name)
 
 loop do
   loop do
-  user_response = ''
-  loop do
-    prompt('game_options_or_help')
-    user_response = response.downcase
-    prompts_various_wrong_user_inputs(user_response)
-    prompt_how_to_play(user_response)
-    break if acceptable_responses?(user_response)
-  end
+    user_response = ''
+    loop do
+      prompt('game_options_or_help')
+      user_response = response.downcase
+      prompts_various_wrong_user_inputs(user_response)
+      prompt_how_to_play(user_response)
+      break if acceptable_responses?(user_response)
+    end
 
-  user_response = full_name_generator(user_response) \
-    unless VALID_CHOICES.include?(user_response)
+    user_response = full_name_generator(user_response) \
+      unless VALID_CHOICES.include?(user_response)
+    computer_choice = VALID_CHOICES.sample
 
-  computer_choice = VALID_CHOICES.sample
+    prompt('user_chose_computer_chose', user_response, computer_choice)
 
-  prompt('user_chose_computer_chose', user_response, computer_choice)
+    display_results(user_response, computer_choice)
 
-  display_results(user_response, computer_choice)
-
-  player_score, computer_score, ties = \
-    continuously_updating_score_keeper(user_response,
-                                       computer_choice,
-                                       player_score,
-                                       computer_score,
-                                       ties)
-  prompt('current_score', player_score, computer_score, ties)
-  break if player_score >= 3 || computer_score >= 3
+    player_score, computer_score, ties = \
+      continuously_updating_score_keeper(user_response,
+                                         computer_choice,
+                                         player_score,
+                                         computer_score,
+                                         ties)
+    prompt('current_score', player_score, computer_score, ties)
+    break if player_score >= 3 || computer_score >= 3
   end
   display_grand_champion(player_score, computer_score, user_name)
-  player_score, computer_score, ties = reset_scores(player_score,
-                                                    computer_score,
-                                                    ties)
+  player_score, computer_score, ties = reset_scores
+
   prompt('ask_play_again')
 
   play_again_response = ''
@@ -257,10 +272,4 @@ clear_screen
 
 prompt('goodbye_with_name', user_name)
 
-# work on ordering the methods (you have done this for the most part)
-
-# cleaning up the body of the loop (possibly)
-# clean up logic of win? method
-# rubocop
 # make a test list when you complete everything above before you move on
-
