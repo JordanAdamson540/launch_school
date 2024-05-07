@@ -171,6 +171,5 @@ p repeat == false
 p repeat('string') == false
 p repeat(0) == false
 p repeat(0, 'string') == false
-p repeat(
 
 ```
