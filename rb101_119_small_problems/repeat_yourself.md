@@ -77,9 +77,11 @@ array
 
 ## algorithm
 
-Take two inputs and verify that they are a string and an integer. Add a newline character to the end of the string. Create a final array which will be used as the return value. Use the integer as an iterator and add each iteration to each element in the string. 
+Take two inputs and verify that they are a string and an integer. Add a newline character to the end of the string. Create a final array which will be used as the return value. Use the integer as an iterator and add each iteration to each element in the string. Finally, join the array together while removing the final newline character.
 
-Finally, join the array together while removing the final newline character.
+given a string called 'string' and a positive integer called 'integer'
+
+START
 
 1. verify the user has given a string and an integer
 2. SET string = string + "\n"
@@ -89,6 +91,7 @@ Finally, join the array together while removing the final newline character.
 	ii. integer = integer -1
 5. final_array.join.chomp
 
+END
 ## one manual test
 
 1. verify the user has given a string and an integer
