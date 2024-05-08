@@ -74,10 +74,10 @@ given an integer called 'integer'
 
 START
 
-1. IF integer % 2 == 0
-	1. RETURN false
-2. ELSIF integer % 2 != 0\
-	2. RETURN true
+(1) IF integer % 2 == 0
+  (i) RETURN false
+(2) ELSIF integer % 2 != 0\
+  (ii) RETURN true
 
 END
 
