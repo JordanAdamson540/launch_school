@@ -65,13 +65,6 @@ p repeat('', 2) == "\n"
 p repeat('26', 2) == "26\n26"
 p repeat('-26', 2) == "-26\n-26"
 
-# wrong format tests
-
-p repeat() == false
-p repeat('hello') == false
-p repeat(0) == false
-p repeat(0, 'hello') == false
-
 ```
 ## data structure
 string as the input => array stores the amount of times the string will be outputted based on integer given => converted back to string before output 
