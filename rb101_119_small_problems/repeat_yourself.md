@@ -42,7 +42,7 @@ output: string as many times as the integer
 
 Add a newline character to the end of the string. Create a final array which will be used as the return value. Use the integer as an iterator and add each iteration to each element in the string. Finally, join the array together while removing the final newline character.
 
-The above simulates the outputted format given in the problem. This is done to try and test various solutions
+The above simulates the outputted format given in the problem. This is done to try and test various solutions.
 
 
 ## test cases
@@ -67,6 +67,7 @@ p repeat('-26', 2) == "-26\n-26"
 
 ```
 ## data structure
+
 string as the input => array stores the amount of times the string will be outputted based on integer given => converted back to string before output 
 
 ## algorithm
@@ -77,7 +78,6 @@ given a string called 'string' and a positive integer called 'integer'
 
 START
 
-
 1. SET string = string + "\n"
 2. SET final_array = []
 3. WHILE integer > 0\
@@ -86,6 +86,7 @@ START
 4. final_array.join.chomp
 
 END
+
 ## one manual test
 
 1. SET string = string + "\n"
@@ -106,14 +107,14 @@ END
 
 
 ```ruby
-	final_array.push("string\n"
+	final_array.push("string\n")
     integer = 5 - 1..... all the way to 0
 ```
 
 4. final_array.join.chomp
 
 ```ruby
-	'string\nstring\nstring\nstring\nstring"
+	"string\nstring\nstring\nstring\nstring"
 ```
 
 
