@@ -89,6 +89,11 @@ END
 
 ## one manual test
 
+``` ruby
+repeat('hello', 2) == "hello\nhello"
+
+```
+
 1. SET string = string + "\n"
 
 
