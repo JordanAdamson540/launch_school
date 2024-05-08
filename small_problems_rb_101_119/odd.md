@@ -44,7 +44,7 @@ question is straightforward
 #### mental model
 ---
 
-Evaluate the expression of a given integer modulo 2. If the modulus is 0, then return the value is false. If the modulus is not 0, then the return value of the function should be true.
+Evaluate the expression of a given integer modulo 2. If the modulus is 0, then return the value false. If the modulus is not 0, then the return value of the function should be true.
 
 #### examples and test cases
 ---
@@ -76,7 +76,7 @@ START
 
 1. IF integer % 2 == 0
 	1. RETURN false
-2. ELSIF integer % 2 != 0
+2. ELSIF integer % 2 != 0\
 	2. RETURN true
 
 END
