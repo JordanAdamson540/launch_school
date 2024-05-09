@@ -66,9 +66,9 @@ an integer on the input => a string on the output
 3. WHILE counter < integer
   i.   counter = counter + 1
   ii.  IF counter is odd?
-	     a. final_string = final_string + '1'
+         a. final_string = final_string + '1'
   iii. ELSIF counter is even?
-  		 a. final_string = final_string + '0'
+  		   a. final_string = final_string + '0'
 4. RETURN final_string
 
 # END
