@@ -90,8 +90,10 @@ START
   i. final_array.push(string_with_newline)
   ii. SET integer = integer - 1
 4. final_array.join.chomp
-```
+
 END
+```
+
 
 ## code with intent
 
