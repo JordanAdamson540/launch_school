@@ -97,18 +97,22 @@ puts stringy(7) == '1010101'
 puts stringy(12) == '101010101010'
 ```
 
-* refactored to get to 10 lines or less in the method
+#### refactored
 
 ``` ruby
+
 def stringy(integer)
   final_string = ''
-  counter = 0
-
-  while counter < integer
-    counter += 1
-    final_string = final_string + (counter.odd? ? '1' : '0')
-  end
-
+    integer.times do |current_number|
+    final_string = final_string + (current_number.even? ? '1' : '0')
+    end
+    # switched method to even? since the .times method starts at integer 0
   final_string
 end
+
+puts stringy(6) == '101010'
+puts stringy(9) == '101010101'
+puts stringy(4) == '1010'
+puts stringy(7) == '1010101'
+puts stringy(12) == '101010101010'
 ```
