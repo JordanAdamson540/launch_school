@@ -128,7 +128,7 @@ puts is_odd?(7)    # => true
 
 ``` ruby
 def is_odd?(integer)
-	integer % 2 == 1
+  integer % 2 == 1
 end
 
 puts is_odd?(2) == false
