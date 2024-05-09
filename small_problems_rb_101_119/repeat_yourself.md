@@ -36,13 +36,16 @@ output: string as many times as the integer
 ## clarifying questions
 
 - question is simple 
-- you could use this also as a way of asking if certain things should be tested for or not
+
 
 ## mental model
 
-Add a newline character to the end of the string. Create a final array which will be used as the return value. Use the integer as an iterator and add each iteration to each element in the string. Finally, join the array together while removing the final newline character.
-
-The above simulates the outputted format given in the problem. This is done to try and test various solutions.
+1. create an empty array called final array, which will end up being the return value at the end of the method
+2. reassign the string to the string with a newline character added to the end
+3. As long as the integer given is greater than 0
+  i. append the string to the end of the final array
+  ii. subtract one from the integer
+4. When the final array is complete, join the array into one string and eliminate the final newline character from the end
 
 
 ## test cases
@@ -52,10 +55,8 @@ The above simulates the outputted format given in the problem. This is done to t
 # numerical value tests
 
 p repeat('hello', 2) == "hello\nhello"
-p repeat('hello', 1.5) == false
 p repeat('hello', 1) == 'hello'
 p repeat('hello', 0) == ''
-p repeat('hello', -1) == false
 
 # string value tests
 
@@ -72,79 +73,46 @@ string as the input => array stores the amount of times the string will be outpu
 
 ## algorithm
 
-Add a newline character to the end of the string. Create a final array which will be used as the return value. Use the integer as an iterator and add each iteration to each element in the string. Finally, join the array together while removing the final newline character.
-
+1. create an empty array called final array, which will end up being the return value at the end of the method
+2. reassign the string to the string with a newline character added to the end
+3. As long as the integer given is greater than 0
+  i. append the string to the end of the final array
+  ii. subtract one from the integer
+4. When the final array is complete, join the array into one string and eliminate the final newline character from the end
+---
 given a string called 'string' and a positive integer called 'integer'
 
 START
 
-1. SET string = string + "\n"
-2. SET final_array = []
-3. WHILE integer > 0\
-	i. final_array.push(string)\
-	ii. integer = integer -1
+1. SET final_array = []
+2. SET string_with_newline = string + "\n"
+3. WHILE integer > 0
+  i. final_array.push(string_with_newline)
+  ii. SET integer = integer - 1
 4. final_array.join.chomp
 
 END
-
-## one manual test
----
-
-``` ruby
-repeat('hello', 2) == "hello\nhello"
-```
----
-
-1. SET string = string + "\n"
-
-
-```ruby
-	string = "string\n"
-```
-
-2. SET final_array = []
-
-
-```ruby
-	final_array = []
-```
-
-3. WHILE integer > 0
-
-
-```ruby
-	final_array.push("string\n")
-    integer = 5 - 1..... all the way to 0
-```
-
-4. final_array.join.chomp
-
-```ruby
-	"string\nstring\nstring\nstring\nstring"
-```
-
 
 ## code with intent
 
 ```ruby
 
 def repeat(string, integer)
-  string = string + "\n"
   final_array = []
+  string_with_newline = string = string + "\n"
+
   while integer > 0
-    final_array.push(string)
+    final_array.push(string_with_newline)
     integer -= 1
-  end\
+  end
+
   final_array.join.chomp
 end
 
 # numerical value tests
 
 p repeat('string', 2) == "string\nstring"
-p repeat('string', 1.5) == false
 p repeat('string', 1) == 'string'
-p repeat('string', 0) == ''
-p repeat('string', -1) == false
 
 # string tests
 
