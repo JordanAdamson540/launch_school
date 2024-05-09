@@ -100,7 +100,7 @@ puts stringy(12) == '101010101010'
 * refactored to get to 10 lines or less in the method
 
 ``` ruby
-def stringy(integer, starting_number = 1)
+def stringy(integer)
   final_string = ''
   counter = 0
 
