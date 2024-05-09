@@ -47,12 +47,12 @@ question is straightforward
 ---
 ``` ruby
 =begin
+
 1. Evaluate the expression of a given integer modulo 2 and save it as modulus
   i.If the modulus is 1
     a. then return the value true
   ii. otherwise, if the modulus is not 0
     a. then the return value of the function should be false.
-
 
 =end
 
@@ -83,7 +83,11 @@ you will use a integer as the input => the end result will return a boolean valu
 ``` ruby
 =begin
 
-Evaluate the expression of a given integer modulo 2. If the modulus is 0, then return the value is false. If the modulus is not 0, then the return value of the function should be true.
+1. Evaluate the expression of a given integer modulo 2 and save it as modulus
+  i.If the modulus is 1
+    a. then return the value true
+  ii. otherwise, if the modulus is not 0
+    a. then the return value of the function should be false.
 
 given an integer called 'integer'
 
