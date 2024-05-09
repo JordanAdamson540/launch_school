@@ -39,14 +39,14 @@ output: string as many times as the integer
 
 
 ## mental model
-
+``` ruby
 1. create an empty array called final array, which will end up being the return value at the end of the method
 2. reassign the string to the string with a newline character added to the end
 3. As long as the integer given is greater than 0
   i. append the string to the end of the final array
   ii. subtract one from the integer
 4. When the final array is complete, join the array into one string and eliminate the final newline character from the end
-
+```
 
 ## test cases
 
@@ -72,7 +72,7 @@ p repeat('-26', 2) == "-26\n-26"
 string as the input => array stores the amount of times the string will be outputted based on integer given => converted back to string before output 
 
 ## algorithm
-
+``` ruby
 1. create an empty array called final array, which will end up being the return value at the end of the method
 2. reassign the string to the string with a newline character added to the end
 3. As long as the integer given is greater than 0
@@ -90,7 +90,7 @@ START
   i. final_array.push(string_with_newline)
   ii. SET integer = integer - 1
 4. final_array.join.chomp
-
+```
 END
 
 ## code with intent
