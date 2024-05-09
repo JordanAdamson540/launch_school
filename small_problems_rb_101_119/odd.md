@@ -1,4 +1,6 @@
-Write a method that takes one integer argument, which may be positive, negative, or zero. This method returns true if the number's absolute value is odd. You may assume that the argument is a valid integer value.
+Write a method that takes one integer argument, which may be positive, 
+negative, or zero. This method returns true if the number's absolute value is 
+odd. You may assume that the argument is a valid integer value.
 
 Examples:
 ``` ruby
@@ -43,8 +45,19 @@ question is straightforward
 
 #### mental model
 ---
+``` ruby
+=begin
+1. Evaluate the expression of a given integer modulo 2 and save it as modulus
+  i.If the modulus is 1
+    a. then return the value true
+  ii. otherwise, if the modulus is not 0
+    a. then the return value of the function should be false.
 
-Evaluate the expression of a given integer modulo 2. If the modulus is 0, then return the value false. If the modulus is not 0, then the return value of the function should be true.
+
+=end
+
+
+```
 
 #### examples and test cases
 ---
@@ -67,6 +80,8 @@ you will use a integer as the input => the end result will return a boolean valu
 
 #### algorithm
 ---
+``` ruby
+=begin
 
 Evaluate the expression of a given integer modulo 2. If the modulus is 0, then return the value is false. If the modulus is not 0, then the return value of the function should be true.
 
@@ -81,29 +96,20 @@ START
 
 END
 
-#### one manual test
----
-is_odd?(-17) == true
-
----
-
-1. ELSIF -17 % 2 != 0
-
-
-``` ruby
-	return true
+=end
 ```
-
 #### code with intent
+
 ---
 
 ``` ruby
 def is_odd?(integer)
-	if integer % 2 == 0
-    	return false
-    else
-    	return true
-    end
+  modulus_of_one = integer % 2 == 1
+  if modulus_of_one
+    return true
+  else
+    return false
+  end
 end
 
 puts is_odd?(2)    # => false
@@ -112,6 +118,20 @@ puts is_odd?(-17)  # => true
 puts is_odd?(-8)   # => false
 puts is_odd?(0)    # => false
 puts is_odd?(7)    # => true
+```
 
+#### refactor
 
+``` ruby
+def is_odd?(integer)
+	integer % 2 == 1
+end
+
+puts is_odd?(2) == false
+puts is_odd?(5) == true
+puts is_odd?(-17) == true
+puts is_odd?(-8) == false
+puts is_odd?(0) == false
+puts is_odd?(7) == true
+puts is_odd?(1) == true
 ```
