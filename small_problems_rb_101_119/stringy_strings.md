@@ -57,6 +57,7 @@ an integer on the input => a string on the output
 
 
 ``` ruby
+=begin
 # given an integer called 'integer'
 
 # START
@@ -71,6 +72,7 @@ an integer on the input => a string on the output
 4. RETURN final_string
 
 # END
+=end
 ```
 
 #### code with intent
