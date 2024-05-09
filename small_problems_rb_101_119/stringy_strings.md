@@ -96,3 +96,19 @@ puts stringy(4) == '1010'
 puts stringy(7) == '1010101'
 puts stringy(12) == '101010101010'
 ```
+
+* refactored to get to 10 lines or less in the method
+
+``` ruby
+def stringy(integer, starting_number = 1)
+  final_string = ''
+  counter = 0
+
+  while counter < integer
+    counter += 1
+    final_string = final_string + (counter.odd? ? '1' : '0')
+  end
+
+  final_string
+end
+```
