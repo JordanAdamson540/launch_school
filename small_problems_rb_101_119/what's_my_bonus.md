@@ -93,7 +93,7 @@ def calculate_bonus(salary, boolean)
   if boolean == false
     return 0
   elsif boolean == true
-  	return salary * 0.5
+    return salary * 0.5
   end
 end
 
