@@ -53,9 +53,6 @@ an integer on the input => a string on the output
 
 #### algorithm
 
-
-
-
 ``` ruby
 =begin
 # given an integer called 'integer'
