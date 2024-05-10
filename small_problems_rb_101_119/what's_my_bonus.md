@@ -109,7 +109,7 @@ puts calculate_bonus(1_000_000, false) == 0
 
 ``` ruby
 def calculate_bonus(salary, boolean)
-  return salary * (boolean ? 0.5 : 0)
+  salary * (boolean ? 0.5 : 0)
 end
 
 puts calculate_bonus(2800, true) == 1400
