@@ -73,7 +73,7 @@ given a positive integer and a boolean value,
   i. multiply the the integer by 0.5
 
 
-given a positive integer called 'salary' and boolean value called 'boolean'
+given a positive integer called 'salary' and boolean value called 'boolean_bonus'
 
 START
 
@@ -89,11 +89,11 @@ END
 #### code with intent
 
 ``` ruby
-def calculate_bonus(salary, boolean)
-  if boolean == false
-    return 0
-  elsif boolean == true
+def calculate_bonus(salary, boolean_bonus)
+  if boolean_bonus 
     return salary * 0.5
+  else 
+    return 0
   end
 end
 
